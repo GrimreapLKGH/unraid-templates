@@ -4,7 +4,8 @@
 No application accounts, scripts, scoring or HTTP-server code is imported here.
 Run with --model MODEL --voices VOICES [--threads 2]. Each input contains text,
 speed, and speakers: a list of voice blends, each [[voice_id, weight], ...].
-Multiple speakers are rendered as a chorus. Output is {wav: BASE64} or {error: ...}.
+Multiple speakers are rendered as a chorus. Output is {wav: BASE64} or {error: ...}. With --task transcribe, input
+{wav: BASE64} returns {transcript: TEXT}; choose --whisper-model and --model-dir.
 """
 import argparse
 import base64
@@ -18,16 +19,30 @@ from kokoro_onnx import Kokoro
 
 def main():
     parser=argparse.ArgumentParser()
-    parser.add_argument('--model',required=True);parser.add_argument('--voices',required=True)
+    parser.add_argument('--model');parser.add_argument('--voices')
+    parser.add_argument('--task',choices=['speak','transcribe'],default='speak')
+    parser.add_argument('--whisper-model',default='small.en');parser.add_argument('--model-dir')
     parser.add_argument('--threads',type=int,default=2)
     args=parser.parse_args()
     opts=ort.SessionOptions();opts.intra_op_num_threads=args.threads;opts.inter_op_num_threads=1
     # Reserve stdout exclusively for the JSON protocol, including during library startup.
     protocol=sys.stdout;sys.stdout=sys.stderr
-    engine=Kokoro.from_session(ort.InferenceSession(args.model,sess_options=opts,providers=['CPUExecutionProvider']),args.voices)
+    engine=Kokoro.from_session(ort.InferenceSession(args.model,sess_options=opts,providers=['CPUExecutionProvider']),args.voices) if args.task=='speak' else None
     for line in sys.stdin:
         try:
-            request=json.loads(line);text=request['text'];speed=float(request['speed']);speakers=request['speakers']
+            request=json.loads(line)
+            if args.task=='transcribe':
+                if engine is None:
+                    from faster_whisper import WhisperModel
+                    engine=WhisperModel(args.whisper_model,device='cpu',compute_type='int8',cpu_threads=args.threads,num_workers=1,download_root=args.model_dir)
+                audio=base64.b64decode(request['wav'],validate=True)
+                with wave.open(io.BytesIO(audio)) as wav:
+                    if wav.getnchannels()!=1 or wav.getsampwidth()!=2 or wav.getframerate()!=16000:raise ValueError('Expected mono 16 kHz PCM WAV')
+                    samples=np.frombuffer(wav.readframes(wav.getnframes()),dtype='<i2').astype(np.float32)/32768.0
+                segments,_=engine.transcribe(samples,language='en',beam_size=5,vad_filter=True,condition_on_previous_text=False)
+                result={'transcript':' '.join(segment.text.strip() for segment in segments).strip()}
+                protocol.write(json.dumps(result)+'\n');protocol.flush();continue
+            text=request['text'];speed=float(request['speed']);speakers=request['speakers']
             if not isinstance(text,str) or not 1<=len(text)<=20000 or not .6<=speed<=1.3 or not 1<=len(speakers)<=8:raise ValueError('Invalid speech request')
             parts=[];rate=None
             for i,blend in enumerate(speakers):
