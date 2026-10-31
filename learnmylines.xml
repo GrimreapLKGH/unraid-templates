@@ -1,0 +1,25 @@
+<Container version="2">
+  <Name>learnmylines</Name>
+  <Repository>ghcr.io/grimreaplkgh/learnmylines:beta</Repository>
+  <Registry>https://github.com/GrimreapLKGH/unraid-templates/pkgs/container/learnmylines</Registry>
+  <Network>bridge</Network>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Icon>https://raw.githubusercontent.com/GrimreapLKGH/unraid-templates/main/icon.svg</Icon>
+  <WebUI>http://[IP]:[PORT:8000]</WebUI>
+  <Overview>Learn play lines with local British character voices, microphone recording and per-line scoring. Includes slow and fast rehearsal, group accounts, script assignments and optional email invitations. Configure an HTTPS reverse proxy before signing in or recording. First administrator setup uses the code in /data/admin-setup-code.</Overview>
+  <Project>https://github.com/GrimreapLKGH/unraid-templates</Project>
+  <Support>https://github.com/GrimreapLKGH/unraid-templates/issues</Support>
+  <TemplateURL>https://raw.githubusercontent.com/GrimreapLKGH/unraid-templates/main/learnmylines.xml</TemplateURL>
+  <ReadMe>https://raw.githubusercontent.com/GrimreapLKGH/unraid-templates/main/README.md</ReadMe>
+  <License>Proprietary freeware; third-party components separately licensed</License>
+  <Category>Tools:</Category>
+  <ExtraSearchTerms>theatre drama rehearsal script lines voice acting</ExtraSearchTerms>
+  <Requires>x86-64 CPU. HTTPS proxy for login and microphone use. Internet for initial model downloads and optional email delivery. Writable appdata required. CPU inference; no GPU required.</Requires>
+  <Beta>true</Beta>
+  <Config Name="Web port" Target="8000" Default="8097" Mode="tcp" Description="Point your HTTPS proxy at the Unraid IP and this host port." Type="Port" Display="always" Required="true" Mask="false"/>
+  <Config Name="Appdata" Target="/data" Default="/mnt/user/appdata/learnmylines" Mode="rw" Description="Private accounts, scripts, models, recordings, voice cache and mail settings. Back up before updates." Type="Path" Display="always" Required="true" Mask="false"/>
+  <Config Name="Secure cookies" Target="COOKIE_SECURE" Default="1" Description="Keep 1 when using HTTPS. Plain HTTP sign-in will not work with secure cookies." Type="Variable" Display="advanced" Required="true" Mask="false"/>
+  <Config Name="Transcription threads" Target="WHISPER_THREADS" Default="4" Type="Variable" Display="advanced" Required="false" Mask="false"/>
+  <Config Name="Voice threads" Target="TTS_THREADS" Default="2" Type="Variable" Display="advanced" Required="false" Mask="false"/>
+</Container>
