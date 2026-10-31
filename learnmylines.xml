@@ -1,7 +1,7 @@
 <Container version="2">
   <Name>learnmylines</Name>
   <Repository>ghcr.io/grimreaplkgh/learnmylines:beta</Repository>
-  <Registry>https://github.com/GrimreapLKGH/unraid-templates/pkgs/container/learnmylines</Registry>
+  <Registry>https://ghcr.io/grimreaplkgh/learnmylines</Registry>
   <Network>bridge</Network>
   <Shell>sh</Shell>
   <Privileged>false</Privileged>
