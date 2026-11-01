@@ -1,5 +1,5 @@
 <CommunityApplications>
-  <Profile>learnmylines: local voice rehearsal for plays, with group accounts and assigned scripts. Report bugs through GitHub Issues.</Profile>
+  <Profile>Unraid templates and support for learnmylines local play rehearsal and Family Vault family photo storage. Application development is maintained privately; report bugs through GitHub Issues.</Profile>
   <Icon>https://raw.githubusercontent.com/GrimreapLKGH/unraid-templates/main/icon.svg</Icon>
   <WebPage>https://github.com/GrimreapLKGH/unraid-templates</WebPage>
 </CommunityApplications>

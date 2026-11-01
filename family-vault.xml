@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Container version="2">
+  <Name>family-vault</Name>
+  <Repository>ghcr.io/grimreaplkgh/family-vault:beta</Repository>
+  <Registry>https://github.com/GrimreapLKGH/family-vault/pkgs/container/family-vault</Registry>
+  <Network>bridge</Network>
+  <MyIP />
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/GrimreapLKGH/unraid-templates/issues</Support>
+  <Project>https://github.com/GrimreapLKGH/unraid-templates</Project>
+  <Overview>Family Vault Beta: shared and private family photo libraries, invitations, albums, import metadata, and duplicate/blur review. Free storage is limited to 500 MB installation-wide. Optional Pro testing includes family trees, custom tags and local face matching. Paid activation and cloud backup are not available yet. Choose your own appdata and photo storage locations. Back up both before upgrades.</Overview>
+  <Category>MediaApp:Photos</Category>
+  <WebUI>http://[IP]:[PORT:8080]</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/GrimreapLKGH/unraid-templates/main/family-vault.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/GrimreapLKGH/unraid-templates/main/family-vault-icon.svg</Icon>
+  <ExtraParams>--user=99:100 --cap-drop=ALL --security-opt=no-new-privileges:true</ExtraParams>
+  <PostArgs />
+  <Config Name="Web interface" Target="8080" Default="8999" Mode="tcp" Description="Application web port" Type="Port" Display="always" Required="true" Mask="false">8999</Config>
+  <Config Name="Application data" Target="/data" Default="/mnt/user/appdata/family-vault" Mode="rw" Description="Database, thumbnails and local account-removal backups. Must be writable by UID 99 / GID 100." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/family-vault</Config>
+  <Config Name="Photo storage" Target="/data/originals" Default="/mnt/user/photos/family-vault" Mode="rw" Description="Choose a dedicated writable folder on an array share, pool, Unassigned Device or share mounted in Unraid (e.g. /mnt/remotes/...). Map a host folder, not an SMB URL. Writable UID 99 / GID 100; must support normal file operations. Existing users: stop the container and move originals before changing this path. Back up originals separately from appdata." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/photos/family-vault</Config>
+  <Config Name="Application URL" Target="APP_URL" Default="" Mode="" Description="Exact browser URL: e.g. https://familyvault.example.com through a proxy, or http://192.168.1.20:8999 on LAN. Used for cookies, invitations and origin checks." Type="Variable" Display="always" Required="true" Mask="false" />
+  <Config Name="Allow Pro testing" Target="PRO_PREVIEW_ALLOWED" Default="false" Mode="" Description="Set true to enable the admin's local test switch. This is not a paid licence." Type="Variable" Display="always" Required="true" Mask="false">false</Config>
+  <Config Name="SMTP host" Target="SMTP_HOST" Default="" Mode="" Description="Optional SMTP server for email invitations. Without SMTP, copy invitation links manually." Type="Variable" Display="always" Required="false" Mask="false" />
+  <Config Name="SMTP port" Target="SMTP_PORT" Default="587" Mode="" Description="SMTP port" Type="Variable" Display="advanced" Required="false" Mask="false">587</Config>
+  <Config Name="SMTP STARTTLS" Target="SMTP_TLS" Default="true" Mode="" Description="Use STARTTLS when connecting to SMTP." Type="Variable" Display="advanced" Required="false" Mask="false">true</Config>
+  <Config Name="SMTP sender" Target="SMTP_FROM" Default="" Mode="" Description="Verified sender address at your SMTP provider." Type="Variable" Display="advanced" Required="false" Mask="false" />
+  <Config Name="SMTP username" Target="SMTP_USERNAME" Default="" Mode="" Description="SMTP login name" Type="Variable" Display="advanced" Required="false" Mask="false" />
+  <Config Name="SMTP password" Target="SMTP_PASSWORD" Default="" Mode="" Description="SMTP password; stored in the local Unraid template." Type="Variable" Display="advanced" Required="false" Mask="true" />
+  <ReadMe>https://raw.githubusercontent.com/GrimreapLKGH/unraid-templates/main/FAMILY-VAULT.md</ReadMe>
+  <License>Proprietary beta; third-party components separately licensed</License>
+  <Beta>true</Beta>
+  <Requires>x86-64 CPU. Writable appdata and photo folders for UID 99 / GID 100. Read first-admin setup code from the server console. Configure APP_URL to the exact browser URL. CPU face matching, no GPU required.</Requires>
+  <ExtraSearchTerms>family photos memories private albums face recognition</ExtraSearchTerms>
+  <Config Name="Protect first administrator setup" Target="SETUP_CODE_REQUIRED" Default="true" Type="Variable" Display="advanced" Required="true" Mask="false" Description="Keep true. On fresh installs read /data/admin-setup-code through the server console. Existing accounts remain unchanged.">true</Config>
+  <Config Name="Import timezone" Target="APP_TIMEZONE" Default="Europe/London" Type="Variable" Display="advanced" Required="true" Mask="false" Description="IANA timezone used for automatic upload album names, e.g. Europe/London or America/New_York.">Europe/London</Config>
+</Container>
