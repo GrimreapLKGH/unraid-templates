@@ -15,7 +15,7 @@
   <License>Proprietary freeware; third-party components separately licensed</License>
   <Category>Tools:</Category>
   <ExtraSearchTerms>theatre drama rehearsal script lines voice acting</ExtraSearchTerms>
-  <Requires>x86-64 CPU. HTTPS proxy for login and microphone use. Internet for initial model downloads and optional email delivery. Writable appdata required. CPU inference; no GPU required.</Requires>
+  <Requires>x86-64 CPU. HTTPS proxy for login and microphone use. Internet for initial model downloads and optional email delivery. Writable appdata required. CPU inference; no GPU required. Optional experimental NVIDIA image available; see README for GPU setup.</Requires>
   <Beta>true</Beta>
   <Config Name="Web port" Target="8000" Default="8097" Mode="tcp" Description="Point your HTTPS proxy at the Unraid IP and this host port." Type="Port" Display="always" Required="true" Mask="false"/>
   <Config Name="Appdata" Target="/data" Default="/mnt/user/appdata/learnmylines" Mode="rw" Description="Private accounts, scripts, models, recordings, voice cache and mail settings. Back up before updates." Type="Path" Display="always" Required="true" Mask="false"/>

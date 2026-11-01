@@ -20,14 +20,27 @@ from kokoro_onnx import Kokoro
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--model');parser.add_argument('--voices')
-    parser.add_argument('--task',choices=['speak','transcribe'],default='speak')
+    parser.add_argument('--task',choices=['speak','transcribe','probe'],default='speak')
     parser.add_argument('--whisper-model',default='small.en');parser.add_argument('--model-dir')
     parser.add_argument('--threads',type=int,default=2)
+    parser.add_argument('--device',choices=['cpu','cuda'],default='cpu')
     args=parser.parse_args()
+    if args.task=='probe':
+        print(json.dumps({'cuda_runtime': 'CUDAExecutionProvider' in ort.get_available_providers(), 'providers':ort.get_available_providers(), 'verified':False}));return
     opts=ort.SessionOptions();opts.intra_op_num_threads=args.threads;opts.inter_op_num_threads=1
     # Reserve stdout exclusively for the JSON protocol, including during library startup.
     protocol=sys.stdout;sys.stdout=sys.stderr
-    engine=Kokoro.from_session(ort.InferenceSession(args.model,sess_options=opts,providers=['CPUExecutionProvider']),args.voices) if args.task=='speak' else None
+    engine=None
+    if args.task=='speak':
+        providers=['CPUExecutionProvider']
+        if args.device=='cuda':
+            if 'CUDAExecutionProvider' not in ort.get_available_providers():raise RuntimeError('NVIDIA GPU runtime is unavailable. Use the GPU image and expose an NVIDIA GPU, or choose CPU.')
+            # Avoid exhaustive per-shape tuning and large workspaces on smaller GPUs.
+            providers=[('CUDAExecutionProvider',{'cudnn_conv_algo_search':'HEURISTIC','cudnn_conv_use_max_workspace':'0','arena_extend_strategy':'kSameAsRequested'}),'CPUExecutionProvider']
+        session=ort.InferenceSession(args.model,sess_options=opts,providers=providers)
+        if args.device=='cuda' and 'CUDAExecutionProvider' not in session.get_providers():raise RuntimeError('NVIDIA GPU could not initialise. Check GPU access, driver and CUDA libraries, or choose CPU.')
+        session.disable_fallback()
+        engine=Kokoro.from_session(session,args.voices)
     for line in sys.stdin:
         try:
             request=json.loads(line)
@@ -62,7 +75,7 @@ def main():
             with wave.open(buf,'wb') as wav:
                 wav.setnchannels(1);wav.setsampwidth(2);wav.setframerate(rate)
                 wav.writeframes((np.clip(output,-1,1)*32767).astype('<i2').tobytes())
-            result={'wav':base64.b64encode(buf.getvalue()).decode('ascii')}
+            result={'wav':base64.b64encode(buf.getvalue()).decode('ascii'),'device':args.device}
         except Exception as error:
             print(type(error).__name__+': '+str(error),file=sys.stderr)
             result={'error':'Speech generation failed.'}
