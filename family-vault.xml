@@ -31,6 +31,7 @@
   <Beta>true</Beta>
   <Requires>x86-64 CPU. Writable appdata and photo folders for UID 99 / GID 100. Read first-admin setup code from the server console. Configure APP_URL to the exact browser URL. CPU face matching, no GPU required.</Requires>
   <ExtraSearchTerms>family photos memories private albums face recognition</ExtraSearchTerms>
+  <Changes>0.1.0-beta.3: Invitations include Shared Family Library by default, with optional private sharing. Contributors can invite their own family. Upgrade privacy change: old automatic private shares are withdrawn and unused old invites cancelled; re-invite selected people with private sharing checked. No photos or accounts are deleted.</Changes>
   <Config Name="Protect first administrator setup" Target="SETUP_CODE_REQUIRED" Default="true" Type="Variable" Display="advanced" Required="true" Mask="false" Description="Keep true. On fresh installs read /data/admin-setup-code through the server console. Existing accounts remain unchanged.">true</Config>
   <Config Name="Import timezone" Target="APP_TIMEZONE" Default="Europe/London" Type="Variable" Display="advanced" Required="true" Mask="false" Description="IANA timezone used for automatic upload album names, e.g. Europe/London or America/New_York.">Europe/London</Config>
 </Container>

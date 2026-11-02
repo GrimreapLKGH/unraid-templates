@@ -38,6 +38,32 @@ Enter that code on the setup page and create the administrator. No accounts,
 passwords or photos are bundled. Existing configured installations do not require
 another setup code. Optional SMTP settings deliver invitations; otherwise copy links.
 
+## Invitations and private access (beta.3)
+
+Admins and Contributors can invite family as Viewer or Contributor. Every invitation
+includes the Shared Family Library. **Also share My Private Library** is unchecked
+by default; select it only for people you want to see your own entire private
+library, including future uploads. The selected invitation role applies to the
+included libraries. Viewer cannot upload or invite. Contributors can upload and
+invite their own family. Server account management remains admin-only.
+
+Example: invite your daughter with private sharing selected; invite your uncle
+without it. Your uncle can invite his children with private sharing selected so
+they can contribute to his private library and the Shared Family Library. They
+do not inherit access to any other library shared with your uncle.
+
+Each inviter can review and remove access to their own private library under
+Invitations & Private Sharing. Removing private access leaves the Shared Family
+Library available. Existing account access is not reduced by accepting another
+invitation; removing private access also cancels unused private invitations for
+that person from you.
+
+**Upgrade privacy change:** beta.2 and earlier automatically granted private access
+on invitation. On the first beta.3 startup, those old private grants are withdrawn
+and unused old invitations are cancelled. Accounts, owners, uploads and all original
+files are retained. Re-invite the people you choose with private sharing explicitly
+selected to restore their access. Back up appdata and originals before upgrading.
+
 ## Free and future Pro activation
 
 The public beta starts on Free with a 500 MB installation-wide storage limit.
