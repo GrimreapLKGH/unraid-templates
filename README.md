@@ -61,3 +61,7 @@ On a fresh installation, backups in the configured folder are detected. Enter th
 The public template uses a PNG icon for Unraid compatibility. Browser pages include the matching favicon. Existing saved containers may need their icon URL updated to `https://raw.githubusercontent.com/GrimreapLKGH/unraid-templates/main/icon.png` and the browser refreshed.
 
 New installations limit Docker logs to three 10 MB files. Existing GPU installations can append `--log-driver=json-file --log-opt max-size=10m --log-opt max-file=3` to Extra Parameters while retaining `--gpus=all`. This limits log growth; it does not reduce installed GPU libraries.
+
+### Correct a blended dialogue line
+
+Open **Review script → Edit → Split a blended dialogue line**. Place the cursor in Original text just before the second speech, choose **Split at cursor**, then check the first character and spoken words. Choose the second character (including any configured main character name), check the second speech and choose **Save split into two lines**. The script is unpublished. Generate missing recordings and publish again; unchanged audio is reused. Changed lines need new attempts; existing history is retained. The importer also recognises a known character followed by a tab when its colon is missing.
