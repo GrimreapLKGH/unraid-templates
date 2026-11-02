@@ -9,7 +9,7 @@
   <Privileged>false</Privileged>
   <Support>https://github.com/GrimreapLKGH/unraid-templates/issues</Support>
   <Project>https://github.com/GrimreapLKGH/unraid-templates</Project>
-  <Overview>Family Vault Beta: shared and private family photo libraries, invitations, albums, import metadata, and duplicate/blur review. Free storage is limited to 500 MB installation-wide. Optional Pro testing includes family trees, custom tags and local face matching. Paid activation and cloud backup are not available yet. Choose your own appdata and photo storage locations. Back up both before upgrades.</Overview>
+  <Overview>Family Vault Beta: shared and private family photo libraries, invitations, albums, import metadata, and duplicate/blur review. The public beta starts on Free with a 500 MB installation-wide limit. Paid Pro activation and cloud backup are not available yet. Choose your own appdata and photo storage locations. Back up both before upgrades.</Overview>
   <Category>MediaApp:Photos</Category>
   <WebUI>http://[IP]:[PORT:8080]</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/GrimreapLKGH/unraid-templates/main/family-vault.xml</TemplateURL>
@@ -20,7 +20,6 @@
   <Config Name="Application data" Target="/data" Default="/mnt/user/appdata/family-vault" Mode="rw" Description="Database, thumbnails and local account-removal backups. Must be writable by UID 99 / GID 100." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/family-vault</Config>
   <Config Name="Photo storage" Target="/data/originals" Default="/mnt/user/photos/family-vault" Mode="rw" Description="Choose a dedicated writable folder on an array share, pool, Unassigned Device or share mounted in Unraid (e.g. /mnt/remotes/...). Map a host folder, not an SMB URL. Writable UID 99 / GID 100; must support normal file operations. Existing users: stop the container and move originals before changing this path. Back up originals separately from appdata." Type="Path" Display="always" Required="true" Mask="false">/mnt/user/photos/family-vault</Config>
   <Config Name="Application URL" Target="APP_URL" Default="" Mode="" Description="Exact browser URL: e.g. https://familyvault.example.com through a proxy, or http://192.168.1.20:8999 on LAN. Used for cookies, invitations and origin checks." Type="Variable" Display="always" Required="true" Mask="false" />
-  <Config Name="Allow Pro testing" Target="PRO_PREVIEW_ALLOWED" Default="false" Mode="" Description="Set true to enable the admin's local test switch. This is not a paid licence." Type="Variable" Display="always" Required="true" Mask="false">false</Config>
   <Config Name="SMTP host" Target="SMTP_HOST" Default="" Mode="" Description="Optional SMTP server for email invitations. Without SMTP, copy invitation links manually." Type="Variable" Display="always" Required="false" Mask="false" />
   <Config Name="SMTP port" Target="SMTP_PORT" Default="587" Mode="" Description="SMTP port" Type="Variable" Display="advanced" Required="false" Mask="false">587</Config>
   <Config Name="SMTP STARTTLS" Target="SMTP_TLS" Default="true" Mode="" Description="Use STARTTLS when connecting to SMTP." Type="Variable" Display="advanced" Required="false" Mask="false">true</Config>

@@ -38,13 +38,13 @@ Enter that code on the setup page and create the administrator. No accounts,
 passwords or photos are bundled. Existing configured installations do not require
 another setup code. Optional SMTP settings deliver invitations; otherwise copy links.
 
-## Free and Pro testing
+## Free and future Pro activation
 
-Free has a 500 MB installation-wide storage limit. Paid lifetime activation and
-Google cloud backup are not implemented. The optional Allow Pro testing setting
-enables the administrator's Settings switch for evaluating trees, custom tags
-and local face matching. It is not a purchased licence. Face suggestions require
-confirmation. Duplicate/blur checks are warnings and may need human review.
+The public beta starts on Free with a 500 MB installation-wide storage limit.
+There is no Pro testing switch in the product or public installer. Existing beta
+settings cannot enable Pro through the web API. Paid lifetime activation and Google
+cloud backup are not implemented yet. Existing premium data is retained when an
+installation is on Free; uploads over its storage allowance are blocked.
 
 ## Updating your existing manual installation
 
