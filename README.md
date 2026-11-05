@@ -39,6 +39,13 @@ Report issues at https://github.com/GrimreapLKGH/unraid-templates/issues. Includ
 See LICENSING.md and COPYING-speech-worker. The image contains third-party notices and source archives under `/usr/share/learnmylines`. These licences are separate from the application licence.
 
 
+## What’s new in 0.1.0-beta.9
+
+- A first-sign-in guide and a clear top menu for rehearsal, session details and cue cards.
+- **Practice My Lines** keeps lines visible and advances after a one-second pause without recording. **Check My Lines** records and scores with optional automatic continuation. **Cue Lines Only** plays just your cues and scores automatically. **Custom Session** keeps the existing controls in a collapsible panel.
+- **Session Details** shows rehearsal time and word accuracy by day. **Directors Area → Members** adds member activity, script and scene progress, and rehearsal data reset.
+- **Cue Cards** groups nearby turns within the same scene and lays out two cards per A4 sheet. Print them, download a PDF, or email the PDF to your sign-in address using the installation’s configured mail service.
+
 ## Storage, backups and rehearsal options
 
 Version 0.1.0-beta.8 adds **Cue lines only**, **Skip line** and **Repeat previous line**, plus song lyric practice and uploaded rehearsal tracks. Cue lines only works with Practice and Test Myself. Songs can be spoken, played from an uploaded audio track, or skipped. Only spoken lyric words are scored; pitch and singing quality are not assessed.
