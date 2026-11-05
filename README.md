@@ -45,11 +45,23 @@ Version 0.1.0-beta.8 adds **Cue lines only**, **Skip line** and **Repeat previou
 
 ### Storage on Unraid
 
-- Keep `/data` mapped to the existing appdata folder: accounts, database, scripts, assignments, scores, uploads, song tracks and settings.
-- Map a separate SSD-pool share such as `/mnt/user/learnmylines-working` to `/work` and set `WORK_DIR=/work`. Put this share on the SSD pool as Primary storage, with no secondary array destination if you want it to stay on SSD. Models, generated voice recordings, effects and GPU caches go here.
-- Map a private array share such as `/mnt/user/learnmylines-backups` to `/backups` and set `BACKUP_DIR=/backups`. Backups can grow large; the current full backup includes downloaded models too.
-- Existing installations continue using their old working folders until **Storage & backups → Move working files to SSD storage** is chosen. Make a backup first and pause generation. Migration copies and verifies files; it retains original folders in appdata. Once you have verified playback, generation and a new backup, you can manually remove the original models, speech-cache, sound-effects, cuda-cache and runtime-cache folders from the old appdata location. Never remove the database, uploads or settings.
-- New template settings do not automatically appear in an existing saved Unraid container: add the two path mappings and two environment variables when upgrading. Keep the existing `/data` mapping.
+The install template shows three editable host folders with help text. Create separate shares for working storage and backups and choose where each share lives in Unraid.
+
+| Unraid field | Default host folder | Container path |
+| --- | --- | --- |
+| Appdata | `/mnt/user/appdata/learnmylines` | `/data` |
+| SSD working storage | `/mnt/user/learnmylines-working` | `/work` |
+| Backup storage | `/mnt/user/learnmylines-backups` | `/backups` |
+
+Set the working share's Primary storage to your SSD pool and leave Secondary storage unset if you want the files to stay on SSD. Put the backup share on the array and keep it private. Use separate folders with no overlap.
+
+### Migrate an existing installation
+
+1. Stop learnmylines and make a copy of its existing appdata. Update to beta.8 or later and keep the existing host folder mapped to `/data` so learnmylines can find your accounts, scripts, scores, uploads and settings.
+2. In **Docker → learnmylines → Edit**, add any missing path mappings for `/work` and `/backups`. Add the variables `WORK_DIR=/work` and `BACKUP_DIR=/backups` if missing. Apply the changes. Existing containers use their saved settings, so check the fields even if you just updated the image.
+3. Sign in as an administrator. Pause recording generation, open **Storage & backups**, and choose **Back up now**. Wait for the backup to complete, then select **Move working files to SSD storage**.
+4. The app copies and verifies the working files before switching to the new location. The original working folders in appdata are retained as a safety copy. Check playback, generate a recording and make a new backup.
+
 - The GPU software itself still occupies Docker image storage. Moving working files does not make those installed libraries smaller. Check total Docker utilisation and allow update headroom before installing; do not prune unrelated containers or delete docker.img.
 
 ### Backup and restore
